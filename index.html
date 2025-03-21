@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <title>Retail POS</title>
-  
+
   <!-- 
-    (1) Basic Content-Security-Policy:
-    - 'self' means scripts and styles must come from the same origin (i.e., your local files).
-    - 'unsafe-inline' is included here to allow inline styles/scripts if you have them.
-      If you remove it, any inline code or style attributes will be blocked.
-    - Adjust or remove 'unsafe-inline' for more security as your codebase matures.
+    (1) Basic CSP: still allowing 'unsafe-inline' for dev convenience.
+    - For a stricter setup, remove 'unsafe-inline' once you no
+      longer have inline styles/scripts.
   -->
   <meta http-equiv="Content-Security-Policy" 
         content="
@@ -19,30 +17,91 @@
         " />
 
   <!-- 
-    (2) Optional: Link a global index.css file for base styles 
-    (e.g., resets, global layout, or anything not tied to a specific route).
-    Create 'index.css' in './src/renderer/styles/' if you have global styling.
+    (2) Global index.css or similar. We'll eventually define
+    .top-nav, .sidebar, .main-layout, .main-content etc. in CSS 
+    to create a modern layout. 
   -->
   <link rel="stylesheet" href="./src/renderer/styles/index.css" />
 </head>
 <body>
-  <!-- 
-    (3) #app will receive the dynamically injected content from router.js.
-    The "Loading..." text shows briefly until the router loads a route.
-  -->
-  <div id="app">Loading...</div>
 
   <!-- 
-    (4) Optional: If you have an index.js for app-wide logic
-    (not specific to dashboard or inventory), include it here.
-    For example, if you have global event listeners or top-level logic:
+    (3) A top navigation bar.
+    - Usually has logo/branding on the left, possibly some 
+      actions or user profile on the right.
+    - We'll keep it simple. You can style or add icons later.
+  -->
+  <header class="top-nav">
+    <div class="logo">
+      <h1>RetailPOS</h1>
+      <!-- You could place a small logo image or brand name here instead. -->
+    </div>
+    <div class="nav-actions">
+      <!-- Optional: placeholders for a search bar, user profile, etc. -->
+      <!-- Example:
+           <input type="text" placeholder="Search..." />
+           <button class="btn-profile">User</button>
+      -->
+    </div>
+  </header>
+
+  <!-- 
+    (4) Main layout container under the top nav.
+    - We'll have a left sidebar for primary navigation, 
+      and a main content area where #app is injected.
+  -->
+  <div class="main-layout">
+    <!-- 
+      Left sidebar 
+      - Could hold nav items to switch routes, e.g. 
+        <div class="nav-item" onclick="window.location.hash='#/dashboard'">Dashboard</div>
+      - We'll keep it as a placeholder for now.
+    -->
+    <aside class="sidebar left-sidebar">
+      <nav class="sidebar-nav">
+        <!-- Example nav items, or placeholders -->
+        <div class="nav-item" onclick="window.location.hash='#/dashboard'">Dashboard</div>
+        <div class="nav-item" onclick="window.location.hash='#/inventory'">Inventory</div>
+        <div class="nav-item" onclick="window.location.hash='#/reports'">Reports</div>
+
+         <!-- New link to your Import/Export route -->
+        <div class="nav-item" onclick="window.location.hash='#/importExport'">Import / Export</div>
+      </nav>
+    </aside>
+
+    <!-- 
+      (5) Main content area
+      - #app is placed here so the router can inject partials.
+      - As the user navigates, router.js replaces the #app content.
+    -->
+    <main class="main-content">
+      <div id="app">Loading...</div>
+      <!-- 
+        The router.js logic will replace the contents of #app 
+        with your partials (dashboard.html, inventory.html, etc.).
+      -->
+    </main>
+  </div>
+  
+  <!-- 
+    (6) If you have a right sidebar or some additional panel, 
+    you could put it here. 
+    <aside class="sidebar right-sidebar">
+      ...
+    </aside>
+  -->
+
+  <!-- 
+    (7) If you have an index.js for global logic, keep it. 
+    (E.g., toggling the sidebar or global event listeners.)
   -->
   <script src="./src/renderer/js/index.js"></script>
 
   <!-- 
-    (5) Finally, load router.js, which handles hash-based routing 
-    to load partials like dashboard.html or inventory.html.
+    (8) Finally, router.js for hash-based routing.
+    - Will inject partials into #app.
   -->
   <script src="./src/renderer/js/router.js"></script>
+
 </body>
 </html>

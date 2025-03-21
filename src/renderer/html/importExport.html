@@ -1,0 +1,89 @@
+<!-- 
+  src/renderer/importExport.html
+
+  This file provides the user interface for importing data from a CSV
+  and exporting data to a CSV. It includes a backup option before import,
+  a file input for selecting CSV files, a button to parse the file and show
+  a mapping table, and controls for exporting data from the database.
+-->
+
+<div class="import-export-container">
+    <h1>Import / Export</h1>
+  
+    <!-- 
+      BACKUP OPTION 
+      This checkbox lets the user decide if they want to perform a data backup
+      (export the current database or table) before importing new data.
+    -->
+    <div class="backup-option">
+      <input type="checkbox" id="backupBeforeImport" />
+      <label for="backupBeforeImport">Backup before Import</label>
+    </div>
+  
+    <!-- 
+      FILE SELECTION 
+      The user picks a CSV file using this file input. 
+      Note the accept=".csv" attribute to filter file types.
+    -->
+    <div class="file-selector">
+      <label for="csvFileInput">Select CSV file:</label>
+      <input type="file" id="csvFileInput" accept=".csv" />
+    </div>
+  
+    <!-- 
+      PARSE & MAPPING SECTION 
+      After the user selects a file, they press "Parse CSV" to read the file
+      and extract the header information. The code in importExport.js will then
+      populate the mapping table with the available DB fields and CSV columns.
+    -->
+    <button id="parseCsvBtn">Parse CSV</button>
+  
+    <!-- 
+      MAPPING TABLE 
+      This table displays two columns:
+        1) The database fields (e.g., "itemId", "name", etc.)
+        2) A dropdown where the user can map each DB field to a corresponding
+           header from the imported CSV.
+      The <tbody> is populated dynamically via JavaScript in importExport.js.
+    -->
+    <table id="mappingTable">
+      <thead>
+        <tr>
+          <th>DB Field</th>
+          <th>CSV Column</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Populated dynamically by importExport.js -->
+      </tbody>
+    </table>
+  
+    <!-- 
+      IMPORT DATA BUTTON 
+      Initially disabled. It becomes enabled once the CSV file has been parsed
+      successfully, and the user has the chance to configure the mapping. 
+      Clicking this triggers the import process, which will:
+        1) Optionally perform a backup (if checkbox is checked).
+        2) Insert or update the data from the CSV into the database.
+    -->
+    <button id="importDataBtn" disabled>Import Data</button>
+  
+    <hr />
+  
+    <!-- 
+      EXPORT SECTION 
+      Allows the user to export different types of data from the database to a CSV file. 
+      The <select> element lets the user pick what data set (e.g., "items", "orders") they 
+      want to export. The "Export to CSV" button triggers the actual export logic in importExport.js.
+    -->
+    <h2>Export Data</h2>
+    <div class="export-options">
+      <select id="exportDataType">
+        <option value="items">Items</option>
+        <option value="orders">Orders</option>
+        <!-- Add more data types as needed -->
+      </select>
+      <button id="exportDataBtn">Export to CSV</button>
+    </div>
+  </div>
+  

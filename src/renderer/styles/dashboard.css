@@ -1,6 +1,16 @@
+/************************************************************
+ * dashboard.css - Revised
+ * 
+ * Purpose:
+ *   Focuses on styling the "dashboard" partial itself, 
+ *   such as the nav-panel, nav-grid, and dynamic content area.
+ *   The top nav and sidebars are now in index.html / index.css,
+ *   so we remove old references to sidebars or .dashboard-container.
+ ************************************************************/
+
 /* =========================================================
-   1) Reset & Global Styles
-   ========================================================= */
+   1) Basic Resets
+   ---------------------------------------------------------*/
    * {
     margin: 0;
     padding: 0;
@@ -8,120 +18,38 @@
   }
   
   /* 
-    Use a modern, clean font. 
-    System UI fallback: "Segoe UI", Roboto, Oxygen, etc.
+    If you want different fonts/colors for the dashboard partial,
+    you can set them here. Otherwise, it inherits from the 
+    global styles in index.css or body { ... }.
   */
-  body {
-    font-family: "Open Sans", Arial, sans-serif;
-    background-color: #fafafa; /* Subtle background for the entire body */
-    color: #333;              /* Default text color */
-  }
   
   /* =========================================================
-     2) Main Dashboard Layout
-     ========================================================= */
-  .dashboard-container {
-    display: flex;
-    min-height: 100vh;
-  }
+     2) Dashboard "Main" Content Styles
+     ---------------------------------------------------------
+     - Since .dashboard-container was replaced by #app in 
+       index.html, we no longer need .dashboard-container rules.
+  */
   
   /* 
-    Sidebars 
-    - Typically hold your main navigation (left) and secondary actions (right).
-  */
-  .sidebar {
-    width: 220px;              /* Slightly wider for more comfortable text spacing */
+    If you had a .dashboard-content or similar wrapper around
+    the partial, you could style it here:
+  
+  .dashboard-content {
     padding: 1rem;
-    background-color: #f0f2f5; /* Updated background color for a softer feel */
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;              /* More vertical space between items */
   }
   
-  /* 
-    Subtle shadow or border can give a clean separation
-    (instead of a full border).
-  */
-  .left-sidebar {
-    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
-  }
-  .right-sidebar {
-    box-shadow: -2px 0 5px rgba(0,0,0,0.05);
-  }
-  
-  /* 
-    Main content area 
-    - White background, some padding, and optional top border or shadow.
-  */
-  .main-content {
-    flex: 1;
-    padding: 2rem;
-    background-color: #fff;
-  }
-  
-  /* 
-    Top Nav / Header 
-    - Slightly larger text, bolder.
-    - Possibly use brand color or keep subtle. 
-  */
-  .top-nav {
-    padding: 1rem 0;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 1rem;
-  }
-  .top-nav h1 {
-    font-size: 1.5rem;
-    color: #333; /* Adjust color or use a brand color */
-    margin-bottom: 0.5rem;
-  }
-  .top-nav h2 {
-    color: #555;
-    font-weight: 400;
-  }
-  
-  /* =========================================================
-     3) Buttons
-     ========================================================= */
-  .btn {
-    padding: 0.75rem 1rem;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    cursor: pointer;
-    text-align: left;
-    font-size: 1rem;
-    border-radius: 4px; /* Slightly rounded corners */
-    transition: background-color 0.2s, box-shadow 0.2s; 
-  }
-  
-  /* 
-    Hover effect:
-    - Subtle shadow or color change 
-  */
-  .btn:not(.disabled):hover {
-    background-color: #e7e9ec;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-  }
-  
-  /* Disabled buttons */
-  .btn.disabled,
-  .btn[disabled] {
-    background-color: #eee;
-    color: #aaa;
-    border-color: #ddd;
-    cursor: not-allowed;
-  }
-  
-  /* 
-    Possibly add an "active" or "selected" state if needed:
-    .btn.active {
-      background-color: #e9ecef;
-      border-color: #bbb;
-    }
   */
   
   /* =========================================================
-     4) Navigation Panel in Main Content
-     ========================================================= */
+     3) Navigation Panel & Grid
+     ---------------------------------------------------------
+     - The main sections displayed in the dashboard partial. 
+  */
+  
+  /* 
+    .nav-panel is a section with a heading and a grid of tiles 
+    or buttons (nav-grid).
+  */
   .nav-panel h2 {
     margin-bottom: 0.75rem;
     font-size: 1.2rem;
@@ -136,9 +64,9 @@
   }
   
   /*
-    nav-section:
-    - Cards or tiles for each nav link.
-    - Slightly rounded edges, subtle shadow on hover.
+    nav-section tiles:
+    - Centered content
+    - Slightly rounded corners, subtle hover effect
   */
   .nav-section {
     display: flex;
@@ -149,7 +77,7 @@
     text-align: center;
     background-color: #fff;
     cursor: pointer;
-    border-radius: 4px; /* Round corners for a more modern look */
+    border-radius: 4px; /* Round corners for a modern look */
     transition: background-color 0.2s, box-shadow 0.2s;
   }
   
@@ -159,7 +87,8 @@
   }
   
   /* 
-    Disabled nav-sections 
+    Disabled nav-sections
+    - Gray out the tile, no hover effect 
   */
   .nav-section.disabled,
   .nav-section[disabled] {
@@ -169,43 +98,28 @@
     border-color: #ddd;
   }
   
-  /* Dynamic content area */
+  /* =========================================================
+     4) Dynamic Content Area
+     ---------------------------------------------------------
+     - Additional content inserted by dashboard.js or router
+       can appear here.
+  */
   #dynamic-content {
     margin-top: 2rem;
   }
   
-  /* 
+  /* =========================================================
      5) Responsive Adjustments
-     - On smaller screens, sidebars might collapse or shift, 
-       and the nav-grid might reduce columns.
+     ---------------------------------------------------------
+     - Adjust columns for the nav-grid on smaller screens.
   */
-  @media (max-width: 992px) {
-    .sidebar {
-      width: 180px;
-    }
-  }
-  
   @media (max-width: 768px) {
-    .sidebar {
-      width: 60px;
-    }
-    .btn {
-      text-align: center;
-      padding: 0.5rem;
-      font-size: 0.9rem;
-    }
     .nav-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
   
   @media (max-width: 480px) {
-    .sidebar {
-      display: none; /* Maybe hide or convert to a toggle menu */
-    }
-    .main-content {
-      padding: 1rem;
-    }
     .nav-grid {
       grid-template-columns: 1fr;
     }

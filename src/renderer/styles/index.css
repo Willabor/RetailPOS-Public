@@ -1,0 +1,134 @@
+/************************************************************
+ * index.css
+ * 
+ * Purpose:
+ *   Defines global styling for your "from-scratch" modern layout,
+ *   including the top nav, main layout container, left sidebar,
+ *   and main content area.
+ ************************************************************/
+
+/*
+  1) GLOBAL STYLES
+  ------------------------------------------------------------
+  - A basic reset + your default body styling.
+  - "Open Sans" is a popular, modern-looking font.
+*/
+body {
+    font-family: "Open Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    /*
+      If you prefer the entire page always fill the viewport,
+      you can set min-height: 100vh; here or rely on .main-layout
+      to handle it with min-height: calc(100vh - 60px);
+    */
+  }
+  
+  /*
+    2) TOP NAV
+    ------------------------------------------------------------
+    - A flex container with "space-between" alignment.
+    - We assign a constant height (60px in this example).
+    - 'line-height' matches 'height' to vertically center single-line text.
+  */
+  .top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #243447;  /* brand color or something else */
+    color: #fff;
+  
+    height: 60px;        /* Constant nav bar height */
+    line-height: 60px;   /* Keeps text vertically centered */
+    padding: 0 1rem;     /* Left-right padding; no vertical padding so total height stays at 60px */
+  
+    /* 
+      Optionally, add a subtle box-shadow if you like:
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    */
+  }
+  
+  /*
+    3) MAIN LAYOUT
+    ------------------------------------------------------------
+    - We place the left sidebar + main content side by side.
+    - min-height: calc(100vh - 60px) aligns with the top-nav's height (60px).
+  */
+  .main-layout {
+    display: flex;
+    min-height: calc(100vh - 60px); 
+    /* 
+      If you change .top-nav height, match it here. 
+      e.g., if nav is 70px, do calc(100vh - 70px).
+    */
+  }
+  
+  /*
+    4) LEFT SIDEBAR
+    ------------------------------------------------------------
+    - A fixed width column on the left with a brand color 
+      or dark background. Holds main navigation.
+  */
+  .sidebar.left-sidebar {
+    width: 220px;
+    background-color: #2f4f60;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  
+  /*
+    5) MAIN CONTENT
+    ------------------------------------------------------------
+    - The rest of the horizontal space.
+    - .main-content is where #app is injected (for partials).
+  */
+  .main-content {
+    flex: 1;
+    padding: 1.5rem;
+    background-color: #fff;
+  
+    /* 
+      If content can overflow, consider adding:
+      overflow-y: auto;
+    */
+  }
+  
+  /*
+    6) SIDEBAR NAV ITEMS
+    ------------------------------------------------------------
+    - Each clickable row in the sidebar nav. 
+    - On hover, we slightly change background color.
+  */
+  .sidebar-nav .nav-item {
+    padding: 1rem;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  
+    /* 
+      You can also add transition: background-color 0.2s;
+      for a smoother hover effect.
+    */
+  }
+  .sidebar-nav .nav-item:hover {
+    background-color: #3f5f70;
+  }
+  
+  /* 
+    7) OPTIONAL EXTRAS
+    ---------------------------------------------------------
+    .nav-item.active {
+      background-color: #506880;
+    }
+  
+    If you want smaller or bigger text for the nav brand:
+    .top-nav h1 {
+      font-size: 1.25rem;
+      margin: 0; 
+    }
+  */
+  
+  /*
+    -- End of index.css --
+  */
+  
