@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+  <!-- If you prefer to link the CSS statically, you can do so here:
+  <link rel="stylesheet" href="../STYLES/dashboard.css" />
+  -->
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Left Sidebar -->
+    <aside class="sidebar left-sidebar">
+      <button class="btn" id="btn-make-sale">Make a Sale</button>
+      <button class="btn" id="btn-receive-items">Receive Items</button>
+      <button class="btn" id="btn-item-list">Item List</button>
+      <button class="btn" id="btn-customer-list">Customer List</button>
+      <button class="btn" id="btn-department-list">Department List</button>
+      <button class="btn" id="btn-reports-left">Reports</button>
+      <button class="btn" id="btn-end-of-day">End Of Day</button>
+      <button class="btn disabled" id="btn-ecommerce" disabled>Ecommerce</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Example top nav / header -->
+      <header class="top-nav">
+        <h1>RetailPOS Dashboard</h1>
+      </header>
+
+      <!-- Navigation / Feature Panel -->
+      <section class="nav-panel">
+        <h2>Main Navigation Panel</h2>
+        <div class="nav-grid">
+          <button class="nav-section" id="btn-customer-orders">Customer Orders</button>
+          <button class="nav-section" id="btn-make-sale-main">Make a Sale</button>
+          <button class="nav-section" id="btn-sales-history">Sales History</button>
+          <button class="nav-section" id="btn-customer-list-main">Customer List</button>
+          <button class="nav-section" id="btn-order-list">Order List</button>
+          <button class="nav-section" id="btn-held-receipts">Held Receipts</button>
+          <button class="nav-section" id="btn-end-of-day-main">End of Day</button>
+          <button class="nav-section disabled" id="btn-reward-manager" disabled>Reward Manager</button>
+        </div>
+      </section>
+
+      <!-- This area can be updated dynamically by dashboard.js -->
+      <section id="dynamic-content"></section>
+    </main>
+
+    <!-- Right Sidebar -->
+    <aside class="sidebar right-sidebar">
+      <button class="btn" id="btn-reports-right">Reports</button>
+      <button class="btn" id="btn-mobile-sync">Mobile Sync</button>
+      <button class="btn" id="btn-store-exchange">Store Exchange</button>
+      <button class="btn" id="btn-financial-center">Financial Center</button>
+      <button class="btn disabled" id="btn-activate-payments" disabled>Activate Payments</button>
+      <button class="btn" id="btn-preferences">Preferences</button>
+      <button class="btn" id="btn-get-support">Get Support</button>
+    </aside>
+  </div>
+
+  <!-- If you want to load JS statically from here, do:
+  <script src="../JS/dashboard.js"></script>
+  -->
+</body>
+</html>

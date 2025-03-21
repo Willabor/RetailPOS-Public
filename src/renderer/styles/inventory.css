@@ -1,0 +1,37 @@
+/* 
+  inventory.css
+  ----------------------------------------------------------------------------
+  Placeholder styles for the Inventory module.
+  More specific styling can be added later as the page grows.
+*/
+
+.inventory-container {
+    /* Basic layout styling, just to illustrate */
+    padding: 1rem;
+    background-color: #fafafa; /* Light background for clarity */
+    min-height: 400px;
+  }
+  
+  .inventory-container h2 {
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .inventory-actions {
+    margin-bottom: 1rem;
+  }
+  
+  .inventory-actions button {
+    margin-right: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    cursor: not-allowed; /* currently disabled placeholders */
+  }
+  
+  .inventory-list {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    background-color: #fff;
+  }
+  

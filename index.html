@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Retail POS</title>
+  
+  <!-- 
+    (1) Basic Content-Security-Policy:
+    - 'self' means scripts and styles must come from the same origin (i.e., your local files).
+    - 'unsafe-inline' is included here to allow inline styles/scripts if you have them.
+      If you remove it, any inline code or style attributes will be blocked.
+    - Adjust or remove 'unsafe-inline' for more security as your codebase matures.
+  -->
+  <meta http-equiv="Content-Security-Policy" 
+        content="
+          default-src 'self'; 
+          script-src 'self' 'unsafe-inline'; 
+          style-src 'self' 'unsafe-inline';
+        " />
+
+  <!-- 
+    (2) Optional: Link a global index.css file for base styles 
+    (e.g., resets, global layout, or anything not tied to a specific route).
+    Create 'index.css' in './src/renderer/styles/' if you have global styling.
+  -->
+  <link rel="stylesheet" href="./src/renderer/styles/index.css" />
+</head>
+<body>
+  <!-- 
+    (3) #app will receive the dynamically injected content from router.js.
+    The "Loading..." text shows briefly until the router loads a route.
+  -->
+  <div id="app">Loading...</div>
+
+  <!-- 
+    (4) Optional: If you have an index.js for app-wide logic
+    (not specific to dashboard or inventory), include it here.
+    For example, if you have global event listeners or top-level logic:
+  -->
+  <script src="./src/renderer/js/index.js"></script>
+
+  <!-- 
+    (5) Finally, load router.js, which handles hash-based routing 
+    to load partials like dashboard.html or inventory.html.
+  -->
+  <script src="./src/renderer/js/router.js"></script>
+</body>
+</html>
