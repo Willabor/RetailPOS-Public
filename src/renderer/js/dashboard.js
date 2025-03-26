@@ -1,34 +1,47 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Grab references to buttons
-    const makeSaleBtn = document.getElementById('btn-make-sale');
-    const receiveItemsBtn = document.getElementById('btn-receive-items');
-    const itemListBtn = document.getElementById('btn-item-list');
-    const customerListBtn = document.getElementById('btn-customer-list');
-    const dynamicContent = document.getElementById('dynamic-content');
-  
-    // Example 1: Make Sale
-    if (makeSaleBtn) {
-      makeSaleBtn.addEventListener('click', () => {
+  // Grab reference to the dynamic content container
+  const dynamicContent = document.getElementById('dynamic-content');
+  if (!dynamicContent) {
+    console.error('Error: #dynamic-content element not found.');
+    return;
+  }
+
+  // Grab reference to the navigation grid
+  const navGrid = document.querySelector('.nav-grid');
+  if (!navGrid) {
+    console.error('Error: .nav-grid element not found.');
+    return;
+  }
+
+  /**
+   * handleButtonClick(event)
+   * ------------------------------------------------------------
+   * Handles button clicks in the navigation grid and updates
+   * the #dynamic-content section with relevant content.
+   * 
+   * Notes:
+   * - Uses the button's ID to determine which content to display.
+   */
+  function handleButtonClick(event) {
+    const button = event.target.closest('.nav-section');
+    if (!button) return; // Ignore clicks outside buttons
+
+    switch (button.id) {
+      case 'btn-make-sale-main':
         dynamicContent.innerHTML = `
           <h2>Make a Sale</h2>
           <p>Sale form / UI goes here.</p>
         `;
-      });
-    }
-  
-    // Example 2: Receive Items
-    if (receiveItemsBtn) {
-      receiveItemsBtn.addEventListener('click', () => {
+        break;
+
+      case 'btn-receive-items':
         dynamicContent.innerHTML = `
           <h2>Receive Items</h2>
           <p>Logic to receive new items would go here.</p>
         `;
-      });
-    }
-  
-    // Example 3: Item List
-    if (itemListBtn) {
-      itemListBtn.addEventListener('click', () => {
+        break;
+
+      case 'btn-item-list':
         dynamicContent.innerHTML = `
           <h2>Item List</h2>
           <ul>
@@ -37,19 +50,20 @@ document.addEventListener('DOMContentLoaded', () => {
             <li>Example Item 3</li>
           </ul>
         `;
-      });
-    }
-  
-    // Example 4: Customer List
-    if (customerListBtn) {
-      customerListBtn.addEventListener('click', () => {
+        break;
+
+      case 'btn-customer-list-main':
         dynamicContent.innerHTML = `
           <h2>Customer List</h2>
           <p>Placeholder for a customer listing table or UI.</p>
         `;
-      });
+        break;
+
+      default:
+        console.warn(`No handler defined for button ID: ${button.id}`);
     }
-  
-    // Add similar event listeners for other sidebar or nav buttons as needed
-  });
-  
+  }
+
+  // Add a delegated event listener to the navigation grid
+  navGrid.addEventListener('click', handleButtonClick);
+});

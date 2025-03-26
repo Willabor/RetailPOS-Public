@@ -1,0 +1,62 @@
+<!-- src/renderer/html/itemList.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Item List</title>
+  <link rel="stylesheet" href="./itemList.css" />
+</head>
+<body>
+  <!-- Sidebar (independent of the flexbox layout) -->
+  <aside class="sidebar">
+    <h1>Retail POS</h1>
+    <div class="nav-item" onclick="location.hash='#/dashboard'">Dashboard</div>
+    <div class="nav-item" onclick="location.hash='#/inventory'">Inventory</div>
+    <div class="nav-item" onclick="location.hash='#/reports'">Reports</div>
+    <div class="nav-item" onclick="location.hash='#/preferences'">Preferences</div>
+    <div class="nav-item" onclick="location.hash='#/importWizard'">Import Wizard</div>
+  </aside>
+
+  <!-- Main Layout -->
+  <div class="main-layout">
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Item List Card -->
+      <div class="item-list-card">
+        <!-- Search Bar -->
+        <div class="inventory-header">
+          <input
+            type="search"
+            placeholder="Search Inventory"
+            class="search-input"
+            aria-label="Search Inventory"
+          />
+        </div>
+
+        <!-- Scrollable Table Window -->
+        <div class="table-container">
+          <table class="item-table">
+            <thead>
+              <tr id="tableHeaderRow">
+                <!-- Dynamically populated by itemList.js -->
+              </tr>
+            </thead>
+            <tbody id="itemTableBody">
+              <!-- Dynamically populated by itemList.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table Footer -->
+        <div class="table-footer">
+          <span id="tableInfo">0 record(s) found</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./src/renderer/js/dbGlobalLists.js"></script>
+  <script src="./src/renderer/js/itemList.js" defer></script>
+</body>
+</html>

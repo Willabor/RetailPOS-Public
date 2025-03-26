@@ -1,0 +1,23 @@
+/* Example minimal styling – adapt to your theme. */
+
+.wizard-container {
+    /* Possibly a card-like container, or just let your global POS CSS handle layout. */
+    padding: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .wizard-step:not([style*="display: none"]) {
+    /* You can highlight the visible step, etc. */
+  }
+  
+  .wizard-nav {
+    margin-top: 1.5rem;
+  }
+  
+  .wizard-nav button {
+    margin-right: 0.5rem;
+  }
+  
+  /* Re-use your existing .btn, .btn-primary, etc. if you have them. */
+  

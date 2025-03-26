@@ -1,0 +1,227 @@
+<!--
+  src/renderer/html/importWizard.html
+
+  This version includes a .content-card wrapper, so your
+  "Old Look" index.css styles (card background, box-shadow)
+  appear around the wizard.
+-->
+
+<div class="content-card">
+  <div class="wizard-container">
+    <h2>Data Import Wizard</h2>
+
+    <!-- STEP 1: Choose Operation (New Data vs. Update) -->
+    <div class="wizard-step" data-step="1">
+      <p>Select how you want to handle your import:</p>
+      <label>
+        <input type="radio" name="importMode" value="addNew" checked>
+        Add new data (e.g. brand-new items not in system)
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="importMode" value="updateExisting">
+        Update existing data (e.g. update item prices, descriptions)
+      </label>
+    
+      <div class="wizard-nav">
+        <button class="btn-next">Next</button>
+        <button class="btn-cancel">Cancel</button>
+        <button class="btn-help">Help</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Choose Data Type -->
+    <div class="wizard-step" data-step="2" style="display: none;">
+      <p>Which type of data will you be importing?</p>
+      <label>
+        <input type="radio" name="importType" value="inventory" checked>
+        Inventory Items
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="importType" value="pictures">
+        Item Pictures
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="importType" value="vendors">
+        Vendors
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="importType" value="customers">
+        Customers
+      </label>
+    
+      <div class="wizard-nav">
+        <button class="btn-prev">Previous</button>
+        <button class="btn-next">Next</button>
+        <button class="btn-cancel">Cancel</button>
+        <button class="btn-help">Help</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Import Method -->
+    <div class="wizard-step" data-step="3" style="display: none;">
+      <p>How would you like to import data?</p>
+      <label>
+        <input type="radio" name="importMethod" value="defaultTemplate" checked>
+        Default template (use our standard CSV/Excel format)
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="importMethod" value="customFile">
+        Custom file (map columns yourself)
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="importMethod" value="vendorCatalog">
+        Vendor catalog (if available)
+      </label>
+    
+      <div class="wizard-nav">
+        <button class="btn-prev">Previous</button>
+        <button class="btn-next">Next</button>
+        <button class="btn-cancel">Cancel</button>
+        <button class="btn-help">Help</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Choose File & Mapping -->
+    <div class="wizard-step" data-step="4" style="display: none;">
+      <p>Choose your file to import:</p>
+      <div>
+        <label for="importFile">File to import:</label>
+        <input type="file" id="importFile" accept=".csv, .xlsx, .xls, .txt">
+      </div>
+      <div>
+        <label for="sheetName">Data is on sheet (optional):</label>
+        <input type="text" id="sheetName" value="Items List">
+      </div>
+      <div>
+        <label for="startRow">Data starts on row:</label>
+        <input type="number" id="startRow" value="2" min="1">
+      </div>
+      <div>
+        <label for="fileMapping">Choose file mapping:</label>
+        <select id="fileMapping">
+          <option value="defaultInventory">Default Inventory Template</option>
+          <option value="mappingA">Mapping A</option>
+          <option value="mappingB">Mapping B</option>
+          <option value="manage">Add New / Manage...</option>
+        </select>
+        <button class="btn-manage-mappings">Manage Mappings</button>
+      </div>
+    
+      <div class="wizard-nav">
+        <button class="btn-prev">Previous</button>
+        <button class="btn-next">Next</button>
+        <button class="btn-cancel">Cancel</button>
+        <button class="btn-help">Help</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Duplicate Handling -->
+    <div class="wizard-step" data-step="5" style="display: none;">
+      <p>During import, if items already exist, how should we handle them?</p>
+      <label>
+        <input type="radio" name="duplicateOption" value="prompt" checked>
+        Prompt me and let me decide for each duplicate
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="duplicateOption" value="keepExisting">
+        Keep existing data and discard import data
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="duplicateOption" value="replaceNoBlanks">
+        Replace existing data with import data (ignore blank fields)
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="duplicateOption" value="replaceAll">
+        Replace existing data with import data (including blank fields)
+      </label>
+    
+      <p>If an item has no department in the file, assign it to:</p>
+      <select id="fallbackDepartment">
+        <option value="System">System</option>
+        <option value="OFF BRAND">OFF BRAND</option>
+        <option value="Online Discount">Online Discount</option>
+      </select>
+    
+      <div class="wizard-nav">
+        <button class="btn-prev">Previous</button>
+        <button class="btn-next">Next</button>
+        <button class="btn-cancel">Cancel</button>
+        <button class="btn-help">Help</button>
+      </div>
+    </div>
+
+    <!-- STEP 6: Preview / Potential Issues -->
+    <div class="wizard-step" data-step="6" style="display: none;">
+      <p class="preview-message">We have checked your import file:</p>
+      <ul>
+        <li><strong>File Name:</strong> <span id="fileNameDisplay">...</span></li>
+        <li><strong># of Inventory Items in File:</strong> <span id="itemCount">0</span></li>
+        <li><strong># of Items to be Added:</strong> <span id="newItems">0</span></li>
+        <li><strong># of Items to be Updated:</strong> <span id="updatedItems">0</span></li>
+      </ul>
+      <p class="warning-msg">
+        Potential problems found? 
+        <button class="btn-view-issues">Click Here</button>
+      </p>
+      <p>
+        <label>
+          <input type="checkbox" id="backupBeforeImport" checked>
+          Backup the database before importing
+        </label>
+      </p>
+    
+      <div class="wizard-nav">
+        <button class="btn-prev">Previous</button>
+        <button class="btn-import">Import</button>
+        <button class="btn-cancel">Cancel</button>
+        <button class="btn-help">Help</button>
+      </div>
+    </div>
+
+    <!-- STEP 7: Final / Results -->
+    <div class="wizard-step" data-step="7" style="display: none;">
+      <p class="success-message"><strong>Import Complete!</strong></p>
+      <ul>
+        <li><strong>New items added:</strong> <span id="itemsAddedCount">0</span></li>
+        <li><strong>Existing items updated:</strong> <span id="itemsUpdatedCount">0</span></li>
+      </ul>
+      <p>
+        <button class="btn-view-log">View Log</button>
+      </p>
+    
+      <div class="wizard-nav">
+        <button class="btn-prev" style="display: none;">Previous</button>
+        <button class="btn-finish">Close</button>
+        <button class="btn-help">Help</button>
+      </div>
+    </div>
+    
+  </div> <!-- end .wizard-container -->
+</div> <!-- end .content-card -->
+
+<div class="import-wizard">
+  <h1>Import Wizard</h1>
+  <p>Select an option:</p>
+  <form id="importWizardForm">
+    <label>
+      <input type="radio" name="importOption" value="newData" />
+      Add new data (e.g., brand-new items not in system)
+    </label>
+    <br />
+    <label>
+      <input type="radio" name="importOption" value="updateData" />
+      Update existing data (e.g., modify existing items)
+    </label>
+    <br />
+    <button type="button" id="nextButton">Next</button>
+  </form>
+</div>

@@ -2,106 +2,115 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Retail POS</title>
+  <title>RetailPOS</title>
 
   <!-- 
-    (1) Basic CSP: still allowing 'unsafe-inline' for dev convenience.
-    - For a stricter setup, remove 'unsafe-inline' once you no
-      longer have inline styles/scripts.
+    (1) Content-Security-Policy (CSP):
+        - Currently allows 'unsafe-inline' for dev convenience 
+          so inline scripts/styles can run.
+        - In production, consider removing 'unsafe-inline' to 
+          tighten security.
   -->
   <meta http-equiv="Content-Security-Policy" 
-        content="
-          default-src 'self'; 
-          script-src 'self' 'unsafe-inline'; 
-          style-src 'self' 'unsafe-inline';
-        " />
+        content="default-src 'self'; connect-src 'self' http://localhost:4141; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';" />
 
   <!-- 
-    (2) Global index.css or similar. We'll eventually define
-    .top-nav, .sidebar, .main-layout, .main-content etc. in CSS 
-    to create a modern layout. 
+    (2) Global CSS reference (index.css):
+        - This file should contain styling for the top nav,
+          sidebars, main layout, fonts, colors, etc.
+        - Make sure ./src/renderer/styles/index.css exists
+          in your project folder and is spelled/capitalized exactly.
   -->
-  <link rel="stylesheet" href="./src/renderer/styles/index.css" />
+  <link rel="stylesheet" href="./src/renderer/globalStyles/index.css" />
 </head>
 <body>
 
   <!-- 
-    (3) A top navigation bar.
-    - Usually has logo/branding on the left, possibly some 
-      actions or user profile on the right.
-    - We'll keep it simple. You can style or add icons later.
+    (3) Top Navigation Bar:
+        - The .top-nav class is defined in index.css to style this 
+          header (e.g., background color, positioning, etc.).
+        - You can expand this area with a logo image or additional 
+          nav elements (user profile, search bar, etc.).
   -->
   <header class="top-nav">
-    <div class="logo">
-      <h1>RetailPOS</h1>
-      <!-- You could place a small logo image or brand name here instead. -->
-    </div>
-    <div class="nav-actions">
-      <!-- Optional: placeholders for a search bar, user profile, etc. -->
-      <!-- Example:
-           <input type="text" placeholder="Search..." />
-           <button class="btn-profile">User</button>
-      -->
-    </div>
+    <h1>Retail POS</h1>
+    <nav>
+      <button>Sign Out</button>
+    </nav>
   </header>
 
   <!-- 
-    (4) Main layout container under the top nav.
-    - We'll have a left sidebar for primary navigation, 
-      and a main content area where #app is injected.
+    (4) Main Layout Container:
+        - .main-layout is set up in index.css (flex container).
+        - It typically spans the full remaining screen height 
+          beneath the .top-nav.
+        - Inside, we have a left sidebar + the main content area.
   -->
   <div class="main-layout">
     <!-- 
-      Left sidebar 
-      - Could hold nav items to switch routes, e.g. 
-        <div class="nav-item" onclick="window.location.hash='#/dashboard'">Dashboard</div>
-      - We'll keep it as a placeholder for now.
+      Left Sidebar:
+      - .sidebar.left-sidebar is styled in index.css to 
+        have a specific width, background color, etc.
+      - .sidebar-nav contains clickable .nav-item elements 
+        to navigate between routes.
     -->
     <aside class="sidebar left-sidebar">
-      <nav class="sidebar-nav">
-        <!-- Example nav items, or placeholders -->
-        <div class="nav-item" onclick="window.location.hash='#/dashboard'">Dashboard</div>
-        <div class="nav-item" onclick="window.location.hash='#/inventory'">Inventory</div>
-        <div class="nav-item" onclick="window.location.hash='#/reports'">Reports</div>
-
-         <!-- New link to your Import/Export route -->
-        <div class="nav-item" onclick="window.location.hash='#/importExport'">Import / Export</div>
-      </nav>
+      <ul class="sidebar-nav">
+        <li class="nav-item active">Dashboard</li>
+        <li class="nav-item">Inventory</li>
+        <li class="nav-item">Reports</li>
+        <li class="nav-item">Preferences</li>
+      </ul>
     </aside>
 
     <!-- 
-      (5) Main content area
-      - #app is placed here so the router can inject partials.
-      - As the user navigates, router.js replaces the #app content.
+      (5) Main Content Area:
+          - .main-content styling in index.css ensures it 
+            stretches and displays the partials loaded by router.js.
+          - #app is the container where router.js will inject 
+            different HTML partials (dashboard.html, inventory.html, etc.)
     -->
     <main class="main-content">
-      <div id="app">Loading...</div>
-      <!-- 
-        The router.js logic will replace the contents of #app 
-        with your partials (dashboard.html, inventory.html, etc.).
-      -->
+      <!-- A content card (optional) -->
+      <div class="content-card">
+        <h2>Welcome to the Enhanced Layout</h2>
+        <p>This is a modernized interface with a reduced content width, 
+           improved hover/focus states, and a consistent color scheme.</p>
+        <button>Click Me</button>
+      </div>
+
+      <!-- Container for dynamically created windows -->
+      <div id="window-container"></div>
+
+      <!-- Section for minimized windows -->
+      <div id="minimized-windows"></div>
+
+      <!-- Container for router -->
+      <div id="app"></div>
+
+      <!-- Buttons for testing -->
+      <button id="btn-inventory">Inventory</button>
+      <button id="btn-customer-orders">Customer Orders</button>
     </main>
   </div>
-  
+
   <!-- 
-    (6) If you have a right sidebar or some additional panel, 
-    you could put it here. 
-    <aside class="sidebar right-sidebar">
-      ...
-    </aside>
+    (6) Optional Additional Layout:
+        - If you want a right sidebar or footer, you can add them
+          outside the .main-content or after this div.
   -->
 
   <!-- 
-    (7) If you have an index.js for global logic, keep it. 
-    (E.g., toggling the sidebar or global event listeners.)
+    (7) Global Scripts:
+        - index.js: Any global or app-wide logic not handled by the router.
+        - router.js: Hash-based routing; loads partials into #app 
+          based on the current window.location.hash.
+        - In devtools, you can see if these scripts are loaded 
+          and check for console errors if paths are incorrect.
   -->
-  <script src="./src/renderer/js/index.js"></script>
-
-  <!-- 
-    (8) Finally, router.js for hash-based routing.
-    - Will inject partials into #app.
-  -->
+  <script src="./src/renderer/js/dbGlobalLists.js"></script>
+  <script src="./src/renderer/js/preload.js" defer></script>
   <script src="./src/renderer/js/router.js"></script>
-
+  <script src="./src/renderer/js/index.js"></script>
 </body>
 </html>

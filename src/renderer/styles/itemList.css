@@ -1,0 +1,450 @@
+/* itemList.css */
+
+/* Reset / Base */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #fdfdfd; /* Light background */
+}
+
+/* Sidebar styling */
+.sidebar {
+  position: fixed; /* Fix the sidebar to the left side of the screen */
+  top: 0;
+  left: 0;
+  width: 250px; /* Fixed width for the sidebar */
+  height: 100vh; /* Full viewport height */
+  background-color: #2c3e50; /* Dark background for the sidebar */
+  color: #ecf0f1; /* Light text color */
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+  z-index: 1000; /* Ensure it stays above other content */
+}
+
+.sidebar h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.sidebar .nav-item {
+  margin: 0.5rem 0;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.sidebar .nav-item:hover {
+  background-color: #34495e;
+}
+
+.item-list-container {
+  margin: 20px;
+}
+
+/* Search box */
+.search-input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Table container */
+.item-table-wrapper {
+  max-width: 100%;
+  overflow-x: auto; /* Horizontal scroll if columns overflow */
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+/* The table itself */
+.item-table {
+  width: max-content; /* Allow the table to expand based on content */
+  border-collapse: collapse;
+  table-layout: auto; /* Columns adjust to content */
+}
+
+/* Pin the header row on scroll (sticky headers) */
+.item-table thead th {
+  position: sticky;
+  top: 0; /* Sticks to the top of its container */
+  z-index: 2; /* Ensure the header stays above body rows */
+  background-color: #f4f5f7;
+}
+
+/* Cells - including a minimum width to keep columns from collapsing too narrowly */
+.item-table th,
+.item-table td {
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  text-align: left;
+  vertical-align: middle;
+  word-wrap: break-word;
+  min-width: 80px; /* Prevent columns from collapsing */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+/* Header styling */
+.item-table th {
+  font-weight: bold;
+  cursor: pointer; /* If you plan to add sorting, the cursor indicates clickable */
+  background-color: #f4f4f4;
+  position: sticky;
+  top: 0; /* Keep headers visible while scrolling vertically */
+  z-index: 1;
+}
+
+/* Zebra striping - helps readability */
+.item-table tbody tr:nth-child(odd) {
+  background-color: #fafafa;
+}
+
+/* Row hover highlight */
+.item-table tbody tr:hover td {
+  background-color: #f1f7ff;
+}
+
+/* Footer (record count) */
+.table-footer {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Notification / Toast (fixed position) */
+#notification {
+  position: fixed; 
+  top: 10px; 
+  right: 10px; 
+  padding: 0.5rem 1rem;
+  color: #fff;
+  display: none;
+  z-index: 9999;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Item detail area */
+.item-detail {
+  position: relative;
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  max-width: 400px;
+  background: #f9f9f9;
+}
+
+#closeDetailBtn {
+  position: absolute; 
+  top: 0.5rem; 
+  right: 0.5rem; 
+  background: none; 
+  border: none; 
+  font-size: 1.2rem; 
+  cursor: pointer;
+}
+
+/* Header context menu */
+#headerMenu {
+  position: absolute;
+  display: none;
+  background: #fff;
+  border: 1px solid #ccc;
+  z-index: 1000;
+}
+
+#headerMenu div {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+#headerMenu div:hover {
+  background-color: #eee;
+}
+
+/* Customize Columns modal */
+#customizeModal {
+  position: fixed;
+  top: 50%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background: #fff;
+  border: 1px solid #ccc; 
+  padding: 1rem;
+  z-index: 2000;
+  display: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+#customizeModal h3 {
+  margin-top: 0;
+}
+#columnsList {
+  max-height: 200px;
+  overflow: auto;
+  border: 1px solid #ddd;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+}
+#columnsList > div {
+  padding: 0.25rem 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+#columnsList > div:last-child {
+  border-bottom: none;
+}
+#saveColumnsBtn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: 1px solid #aaa;
+  background-color: #f0f0f0;
+  border-radius: 3px;
+}
+#saveColumnsBtn:hover {
+  background-color: #e0e0e0;
+}
+
+/* Main content card styling */
+.content-card {
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+  margin: 1rem;
+}
+
+/* Header layout */
+.inventory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Context menu styling */
+.context-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  padding: 0.5rem;
+}
+.context-menu div {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+.context-menu div:hover {
+  background-color: #f4f5f7;
+}
+
+/* Reuse the .modal style for any pop-up dialog */
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  padding: 1rem;
+  width: 300px;
+  border-radius: 4px;
+}
+.modal h3 {
+  margin-top: 0;
+}
+.modal #columnsList {
+  margin: 1rem 0;
+  max-height: 200px;
+  overflow-y: auto; 
+}
+.modal button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.modal button:hover {
+  background-color: #0056b3;
+}
+
+/* Main layout: Content only (starts next to the sidebar) */
+.main-layout {
+  margin-left: 150px; /* Leave space for the fixed sidebar (from global CSS) */
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  min-height: 100vh; /* Allow it to grow to full viewport height */
+  width: calc(100% - 150px); /* Take the remaining width of the screen */
+  overflow: auto; /* Enable scrolling for the entire layout */
+}
+
+/* Main content area */
+.main-content {
+  flex: 1; /* Let it grow vertically to fill available space */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  background-color: #fdfdfd; /* Light background for the content */
+  padding: 1rem;
+  overflow: auto; /* Enable scrolling for the content area */
+}
+
+/* Table container */
+.table-container {
+  flex: 1 1 auto; /* Allow it to grow and fill available space */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ccc; /* Optional: Add a border */
+  border-radius: 4px;
+  background-color: #fff;
+  min-height: 600px; /* Ensure the table container is long enough, even if empty */
+}
+
+/* Table styling */
+.item-table {
+  width: 100%; /* Stretch the table to fill the container */
+  min-width: 1200px; /* Ensure the table is wide enough, even if empty */
+  border-collapse: collapse;
+  table-layout: auto; /* Columns adjust to content */
+}
+
+.item-table th, .item-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.item-table th {
+  background-color: #f4f4f4;
+  position: sticky;
+  top: 0; /* Keep headers visible while scrolling vertically */
+  z-index: 1;
+}
+
+/* Zebra striping for readability */
+.item-table tbody tr:nth-child(odd) {
+  background-color: #fafafa;
+}
+
+/* Row hover highlight */
+.item-table tbody tr:hover td {
+  background-color: #f1f7ff;
+}
+
+/* Footer (record count) */
+.table-footer {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+  text-align: right;
+}
+
+/* Ensure the scrollbar is always visible */
+.table-container::-webkit-scrollbar {
+  width: 12px; /* Adjust scrollbar width */
+  height: 12px; /* Adjust scrollbar height */
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #888; /* Scrollbar thumb color */
+  border-radius: 6px; /* Rounded edges for the scrollbar thumb */
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker color on hover */
+}
+
+.table-container::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Scrollbar track color */
+}
+
+/* Style for the editable input field */
+.cell-editor {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.cell-editor:focus {
+  outline: none;
+  border: 1px solid #007bff; /* Optional: Add a focus border */
+}
+
+/* Media Queries for Responsive Design */
+
+/* For small screens (e.g., mobile devices) */
+@media (max-width: 768px) {
+  .main-layout {
+    margin-left: 0; /* Remove sidebar space for small screens */
+    width: 100%; /* Take the full width of the screen */
+  }
+
+  .main-content {
+    padding: 0.5rem; /* Reduce padding for smaller screens */
+  }
+
+  .table-container {
+    min-height: 400px; /* Adjust height for smaller screens */
+  }
+
+  .item-table {
+    min-width: 600px; /* Reduce the minimum width of the table */
+  }
+}
+
+/* For medium screens (e.g., tablets) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .main-layout {
+    margin-left: 150px; /* Keep sidebar space for medium screens */
+    width: calc(100% - 150px); /* Adjust width for medium screens */
+  }
+
+  .main-content {
+    padding: 1rem; /* Standard padding for medium screens */
+  }
+
+  .table-container {
+    min-height: 500px; /* Adjust height for medium screens */
+  }
+
+  .item-table {
+    min-width: 800px; /* Adjust the minimum width of the table */
+  }
+}
+
+/* For large screens (e.g., desktops) */
+@media (min-width: 1025px) {
+  .main-layout {
+    margin-left: 150px; /* Keep sidebar space for large screens */
+    width: calc(100% - 150px); /* Adjust width for large screens */
+  }
+
+  .main-content {
+    padding: 1.5rem; /* Add more padding for larger screens */
+  }
+
+  .table-container {
+    min-height: 600px; /* Standard height for large screens */
+  }
+
+  .item-table {
+    min-width: 1200px; /* Standard minimum width of the table */
+  }
+}

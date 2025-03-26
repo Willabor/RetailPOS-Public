@@ -26,7 +26,6 @@
     padding: 0.5rem 1rem;
     background-color: #ddd;
     border: 1px solid #ccc;
-    cursor: not-allowed; /* currently disabled placeholders */
   }
   
   .inventory-list {

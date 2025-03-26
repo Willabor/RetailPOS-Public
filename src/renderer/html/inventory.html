@@ -1,30 +1,31 @@
-<!-- 
-  inventory.html
-  ----------------------------------------------------------------------------
-  Purpose: Display and manage all inventory-related features, including:
-    - Item lists
-    - Departments
-    - Adjustments
-    - Transfer slips
-    - Inventory sub-reports
-    - Any other related tasks
-  
-  Currently a placeholder that will be fleshed out later.
--->
-<div class="inventory-container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Inventory</title>
+  <link rel="stylesheet" href="../globalStyles/index.css">
+</head>
+<body>
+  <div class="content-card inventory-container">
     <h2>Inventory Module</h2>
     <p>This page will include item lists, departments, adjustments, etc.</p>
-  
-    <!-- Example sub-sections or placeholders -->
+
+    <!-- Inventory Actions -->
     <div class="inventory-actions">
-      <!-- Possibly show quick links/buttons to add new item, adjust quantity, etc. -->
+      <button onclick="window.location.hash='#/inventory/importWizard'">
+        Import Wizard
+      </button>
       <button disabled>New Item (Coming Soon)</button>
       <button disabled>Transfer Slip (Coming Soon)</button>
       <button disabled>Inventory Reports (Coming Soon)</button>
     </div>
-  
-    <div class="inventory-list">
-      <p>Eventually, a table of items or departments might appear here.</p>
+
+    <!-- Navigate to Item List -->
+    <div style="margin-top: 1rem;">
+      <button onclick="window.location.hash='#/inventory/itemList'">
+        View Item List
+      </button>
     </div>
   </div>
-  
+</body>
+</html>

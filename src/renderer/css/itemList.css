@@ -1,0 +1,191 @@
+/* =========================================================
+   1) Basic Resets
+   ---------------------------------------------------------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   2) Item List Container Styles
+   ---------------------------------------------------------*/
+.item-list-container {
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Section */
+.inventory-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.inventory-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.inventory-header .search-input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+}
+
+/* =========================================================
+   3) Table Styles
+   ---------------------------------------------------------*/
+.item-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.item-table th,
+.item-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.item-table th {
+  background-color: #f1f1f1;
+  font-weight: 600;
+  color: #333;
+}
+
+.item-table tbody tr:hover {
+  background-color: #e7e9ec;
+}
+
+.table-footer {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* =========================================================
+   4) Detail Panel Styles
+   ---------------------------------------------------------*/
+.item-detail {
+  padding: 1rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: none; /* Hidden by default */
+}
+
+.item-detail h3 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.item-detail .detail-section {
+  margin-bottom: 1rem;
+}
+
+.item-detail .detail-section h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.item-detail .detail-section p {
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+/* Close Button */
+.close-detail {
+  color: #444;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.close-detail:hover {
+  color: #000;
+}
+
+/* =========================================================
+   5) Context Menu & Modal Styles
+   ---------------------------------------------------------*/
+#headerMenu {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+}
+
+#headerMenu div {
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#headerMenu div:hover {
+  background-color: #e7e9ec;
+}
+
+#customizeModal {
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#customizeModal h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+#customizeModal button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#customizeModal button:hover {
+  background-color: #0056b3;
+}
+
+/* =========================================================
+   6) Responsive Adjustments
+   ---------------------------------------------------------*/
+@media (max-width: 768px) {
+  .inventory-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .item-table th,
+  .item-table td {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .item-table th,
+  .item-table td {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+  }
+}

@@ -1,98 +1,60 @@
 /***********************************************************
  * router.js
  * ----------------------------------------------------------------------------
- * Purpose:
- *   Manages client-side routing for different "pages" or partials in your 
- *   Electron/Web app without a full reload, using window.location.hash.
- *
- * Mechanism:
- *   - We define a `routes` object that maps specific URL hashes (e.g. "#/dashboard")
- *     to the matching HTML, CSS, and JS files.
- *   - When the hash changes (or the page first loads), we check which route
- *     we should load, read that partial's HTML via fs, inject it into #app,
- *     then create <link> and <script> elements for the partial's CSS & JS.
+ * Manages client-side routing for different "pages" or partials 
+ * in your Electron/Web app without a full reload, using window.location.hash.
  ***********************************************************/
 
-/*
-  (0) Require 'fs' and 'path' because we have nodeIntegration: true in Electron.
-      We'll use these to read local HTML files from disk (instead of fetch()).
-*/
 const fs = require('fs');
 const path = require('path');
 
 /*
   (1) Define the routes object:
-
-  Each key is a URL hash (like "#/dashboard", "#/inventory", "#/importExport"), 
-  and each value is an object specifying:
-    html: path to the partial HTML file,
-    css:  path to its CSS,
-    js:   path to its JS code.
-
-  For example, going to "#/inventory" loads:
-    - html: './src/renderer/HTML/inventory.html'
-    - css:  './src/renderer/STYLES/inventory.css'
-    - js:   './src/renderer/JS/inventory.js'
+      - Each key is a URL hash (like "#/dashboard").
+      - Each value is an object with { html, css, js } paths.
 */
 const routes = {
   '#/dashboard': {
-    html: './src/renderer/HTML/dashboard.html',
-    css:  './src/renderer/STYLES/dashboard.css',
-    js:   './src/renderer/JS/dashboard.js'
+    html: './src/renderer/html/dashboard.html',
+    css:  './src/renderer/styles/dashboard.css',
+    js:   './src/renderer/js/dashboard.js'
   },
-
   '#/inventory': {
-    html: './src/renderer/HTML/inventory.html',
-    css:  './src/renderer/STYLES/inventory.css',
-    js:   './src/renderer/JS/inventory.js'
+    html: './src/renderer/html/inventory.html',
+    css:  './src/renderer/styles/inventory.css',
+    js:   './src/renderer/js/inventory.js'
   },
-
-  // New route for Preferences
   '#/preferences': {
-    html: './src/renderer/HTML/preferences.html',
-    css:  './src/renderer/STYLES/preferences.css',
-    js:   './src/renderer/JS/preferences.js'
+    html: './src/renderer/html/preferences.html',
+    css:  './src/renderer/styles/preferences.css',
+    js:   './src/renderer/js/preferences.js'
   },
-
-  // Route for Import/Export
-  '#/importExport': {
-    html: './src/renderer/HTML/importExport.html',
-    css:  './src/renderer/STYLES/importExport.css',
-    js:   './src/renderer/JS/importExport.js'
+  '#/inventory/importWizard': {
+    html: './src/renderer/html/importWizard.html',
+    css:  './src/renderer/styles/importWizard.css',
+    js:   './src/renderer/js/importWizard.js'
   },
-
-  // Example placeholder for future partial (e.g., "Reports"):
-  // '#/reports': {
-  //   html: './src/renderer/HTML/reports.html',
-  //   css:  './src/renderer/STYLES/reports.css',
-  //   js:   './src/renderer/JS/reports.js'
-  // },
+  '#/inventory/itemList': {
+    html: './src/renderer/html/itemList.html',
+    css:  './src/renderer/styles/itemList.css',
+    js:   './src/renderer/js/itemList.js'
+  },
+  '#/reports': {
+    html: './src/renderer/html/reports.html',
+    css:  './src/renderer/styles/reports.css',
+    js:   './src/renderer/js/reports.js'
+  }
 };
 
 /*
   (2) loadPartial(htmlPath, cssPath, jsPath):
-      A helper function that reads the specified HTML file from disk,
-      injects it into #app, and then appends <link> and <script>
-      elements for the partial's CSS & JS.
-
-   Steps:
-     2a) Use fs.readFile() to retrieve the HTML file (htmlPath).
-     2b) Inject that HTML into the <div id="app"> in index.html.
-     2c) Remove any previously injected route-based CSS links, 
-         then add <link> to the new partial's CSS file.
-     2d) Remove any previously injected route-based <script> tags, 
-         then add <script> for the partial's JS.
-
-   NOTE:
-     This approach helps ensure we don't accumulate multiple CSS/JS files
-     as the user navigates around. If certain CSS/JS is shared across all
-     pages, you can load those in index.html itself.
+      - Reads the specified HTML file and injects it into #app.
+      - Adds the corresponding CSS and JS for the route.
+      - Removes previously injected CSS and JS files.
 */
 function loadPartial(htmlPath, cssPath, jsPath) {
-  // Resolve the absolute path of our partial HTML file based on the current working directory.
   const absoluteHtmlPath = path.resolve(process.cwd(), htmlPath);
 
-  // (2a) Read the partial HTML from disk using Node's fs.readFile.
   fs.readFile(absoluteHtmlPath, 'utf8', (err, htmlContent) => {
     if (err) {
       console.error(`Error reading ${absoluteHtmlPath}:`, err);
@@ -103,22 +65,21 @@ function loadPartial(htmlPath, cssPath, jsPath) {
       return;
     }
 
-    // (2b) Inject the HTML into the #app container
     const appDiv = document.getElementById('app');
     if (!appDiv) {
       console.error('#app not found in index.html');
-      return; // If #app div doesn't exist, stop here
+      return;
     }
     appDiv.innerHTML = htmlContent;
 
-    // (2c) Remove older route-based CSS links, then create a <link> for the new partial's CSS
+    // Remove old CSS and inject new
     removeInjectedLinks();
     const linkEl = document.createElement('link');
     linkEl.rel = 'stylesheet';
-    linkEl.href = cssPath; 
+    linkEl.href = cssPath;
     document.head.appendChild(linkEl);
 
-    // (2d) Remove older route-based scripts, then create a <script> for the partial's JS
+    // Remove old JS and inject new
     removeInjectedScripts();
     const scriptEl = document.createElement('script');
     scriptEl.src = jsPath;
@@ -128,64 +89,69 @@ function loadPartial(htmlPath, cssPath, jsPath) {
 
 /*
   (3) removeInjectedLinks() / removeInjectedScripts():
-      Helpers to avoid stacking multiple CSS and JS files in the DOM
-      when navigating between routes.
-
-      - removeInjectedLinks():
-        Removes <link> elements whose href starts with "./src/renderer/STYLES/".
-      - removeInjectedScripts():
-        Removes <script> elements whose src starts with "./src/renderer/JS/".
-
-      Adjust these patterns if your folder paths differ or if you want certain
-      scripts/links to remain loaded across routes.
+      - Clears out previously injected route-based CSS & JS
+        before injecting the new route's files.
 */
 function removeInjectedLinks() {
-  const allLinks = document.querySelectorAll('head link[href^="./src/renderer/STYLES/"]');
+  const allLinks = document.querySelectorAll('head link[href^="./src/renderer/styles/"]');
   allLinks.forEach(link => link.remove());
 }
 
 function removeInjectedScripts() {
-  const allScripts = document.querySelectorAll('body script[src^="./src/renderer/JS/"]');
-  allScripts.forEach(script => script.remove());
+  const allScripts = document.querySelectorAll('body script[src^="./src/renderer/js/"]');
+  allScripts.forEach(script => {
+    // If it includes "dbGlobalLists.js", skip removing it
+    if (script.src.includes('dbGlobalLists.js')) return;
+    script.remove();
+  });
 }
 
 /*
   (4) handleRouteChange():
-      - Reads the current hash in the URL (e.g. "#/dashboard").
-      - Finds the matching route in the `routes` object.
-      - Calls loadPartial() with that route's HTML, CSS, and JS paths.
-      - If no matching route is found, defaults back to "#/dashboard" or logs a 404.
-
-      This function is called whenever 'hashchange' fires, or if
-      we manually invoke it on page load to set an initial route.
+      - Checks the current hash.
+      - If a matching route exists, loads it.
+      - If not, defaults to #/dashboard.
 */
 function handleRouteChange() {
-  const hash = window.location.hash; // e.g., "#/dashboard"
-  const route = routes[hash];       // e.g., routes["#/dashboard"]
+  const hash = window.location.hash;
+  const route = routes[hash];
 
   if (route) {
     loadPartial(route.html, route.css, route.js);
   } else {
-    // No route found for the current hash => fallback to #/dashboard
-    console.warn(`No route found for: ${hash}. Redirecting to #/dashboard.`);
+    console.warn(`No route found for: ${hash}, redirecting to #/dashboard.`);
     window.location.hash = '#/dashboard';
   }
 }
 
 /*
-  (5) Setting up event listeners for "hashchange" and "DOMContentLoaded":
-      - "hashchange": Fires when window.location.hash changes (via links or code).
-      - "DOMContentLoaded": Fires once the initial HTML is loaded and parsed,
-                           so we can set our default route if none is specified.
+  (5) On hashchange or initial load, call handleRouteChange()
 */
 window.addEventListener('hashchange', handleRouteChange);
-
 window.addEventListener('DOMContentLoaded', () => {
-  // If there's no hash, set a default route to '#/dashboard'.
-  // Otherwise, handle whatever hash is present in the URL on page load.
   if (!window.location.hash) {
     window.location.hash = '#/dashboard';
   } else {
     handleRouteChange();
   }
+});
+
+function loadRoute(route) {
+  const routeConfig = routes[route];
+  if (!routeConfig) {
+    console.error(`Route ${route} not found.`);
+    return;
+  }
+
+  fetch(routeConfig.html)
+    .then((response) => response.text())
+    .then((html) => {
+      createWindow(route, html); // Inject the content into a new window
+    })
+    .catch((error) => console.error("Error loading route:", error));
+}
+
+window.addEventListener("hashchange", () => {
+  const route = window.location.hash;
+  loadRoute(route);
 });

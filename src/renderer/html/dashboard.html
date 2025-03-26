@@ -1,58 +1,48 @@
-<!-- 
-  We no longer include <!DOCTYPE html>, <head>, or <body> tags 
-  because this file is now a "partial" injected by router.js 
-  into #app inside index.html.
-
-  The sidebars and top-nav have moved to index.html,
-  so they are no longer needed here. 
--->
-
 <!--
-  We keep the main "Dashboard" content: 
-  - A nav-panel with your grid of buttons
-  - A dynamic content section if needed
+  src/renderer/html/dashboard.html
+
+  Updated to include a ".content-card" wrapper for a white 
+  card background and box-shadow, matching your index.css.
+  You can keep ".dashboard-content" if you wish to apply 
+  any dashboard-specific styling in dashboard.css.
 -->
 
-<div class="dashboard-content">
-
-  <!-- 
-    (1) Dashboard Title or Heading 
-    - Replacing the old <header class="top-nav">
-    - We keep a simple heading for the dashboard's content.
-  -->
+<div class="content-card dashboard-content">
+  <!-- Dashboard Header -->
   <h1>RetailPOS Dashboard</h1>
 
-  <!-- 
-    (2) Navigation / Feature Panel 
-    - The main set of nav-grid tiles. 
-    - This is the core "dashboard" area. 
-  -->
+  <!-- Navigation Panel -->
   <section class="nav-panel">
     <h2>Main Navigation Panel</h2>
     <div class="nav-grid">
-      <!-- 
-        These buttons can be repurposed 
-        to set window.location.hash or handle local logic.
-      -->
-      <button class="nav-section" id="btn-customer-orders">Customer Orders</button>
-      <button class="nav-section" id="btn-make-sale-main">Make a Sale</button>
-      <button class="nav-section" id="btn-sales-history">Sales History</button>
-      <button class="nav-section" id="btn-customer-list-main">Customer List</button>
-      <button class="nav-section" id="btn-order-list">Order List</button>
-      <button class="nav-section" id="btn-held-receipts">Held Receipts</button>
-      <button class="nav-section" id="btn-end-of-day-main">End of Day</button>
-      <button class="nav-section disabled" id="btn-reward-manager" disabled>
-        Reward Manager
+      <!-- Buttons for key actions -->
+      <button class="nav-section" id="btn-customer-orders" aria-label="Customer Orders">
+        Customer Orders
+      </button>
+      <button class="nav-section" id="btn-make-sale-main" aria-label="Make a Sale">
+        Make a Sale
+      </button>
+      <button class="nav-section" id="btn-sales-history" aria-label="Sales History">
+        Sales History
+      </button>
+      <button class="nav-section" id="btn-customer-list-main" aria-label="Customer List">
+        Customer List
+      </button>
+      <button class="nav-section" id="btn-order-list" aria-label="Order List">
+        Order List
+      </button>
+      <button class="nav-section" id="btn-held-receipts" aria-label="Held Receipts">
+        Held Receipts
+      </button>
+      <button class="nav-section" id="btn-end-of-day-main" aria-label="End of Day">
+        End of Day
       </button>
     </div>
   </section>
 
-  <!-- 
-    (3) Dynamic content area (optional)
-    - If dashboard.js or other code injects additional content 
-      (e.g., summary cards, charts) into this partial at runtime, 
-      we keep this section. 
-  -->
-  <section id="dynamic-content"></section>
-
+  <!-- Dynamic Content Section -->
+  <section id="dynamic-content">
+    <!-- Placeholder for dynamically injected content -->
+    <p>Welcome to the RetailPOS Dashboard! Select an action from the navigation panel.</p>
+  </section>
 </div>
